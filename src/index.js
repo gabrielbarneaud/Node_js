@@ -1,12 +1,16 @@
 import express from 'express'
+import routes from './routes/index.js'
+import InitDb from './db'
 
-export default () => {
+export default async () => {
     try {
         const app = express();
-        const port = 3000;
 
-        app.listen(port, () => {
-            console.log('un truc')
+        await InitDb()
+        routes(app)
+
+        app.listen(process.env.PORT, () => {
+            console.log(process.env.NODE_ENV)
         })
     } catch(e) {
         console.error(e)
